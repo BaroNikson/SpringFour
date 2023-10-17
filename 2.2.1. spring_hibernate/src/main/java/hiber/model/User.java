@@ -1,6 +1,6 @@
 package hiber.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -19,8 +19,12 @@ public class User {
    @Column(name = "email")
    private String email;
 
-   public User() {}
-   
+   @OneToOne
+   private Car car;
+
+   public User() {
+   }
+
    public User(String firstName, String lastName, String email) {
       this.firstName = firstName;
       this.lastName = lastName;
@@ -57,5 +61,16 @@ public class User {
 
    public void setEmail(String email) {
       this.email = email;
+   }
+
+   public Car getCar() {
+      return car;
+   }
+
+   public void setCar(Car car) {
+      this.car = car;
+      if (car != null) {
+         car.setUser(this);
+      }
    }
 }
